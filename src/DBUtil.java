@@ -18,7 +18,8 @@ public class DBUtil {
 	public DBUtil() {
 		init();
 	}
-	
+	// ==========================================================================================
+	// 초기화 함수
 	public void init() {
 		try {
 			// 1. 드라이버 세팅
@@ -39,7 +40,8 @@ public class DBUtil {
 		}
 	}
 	
-	
+	// ==========================================================================================
+	// 리스트 가져오기
 	public ArrayList<Article> selectArticles() {
 		
 		String sql = "SELECT * FROM article";
@@ -61,22 +63,14 @@ public class DBUtil {
 			System.out.println("데이터를 가져오다가 문제 발생");
 			
 		} finally {
-			try {
-				if(stmt != null) {
-					stmt.close();		
-				}
-				if(rs != null) {
-					rs.close();		
-				}
-				
-			} catch(Exception e) {
-				System.out.println("자원 해제중 문제 발생");
-			}
+			close();
 		}
 		
 		return articleList;
 	}
 	
+	// ==========================================================================================
+	// 수정
 	public void updateArticle(String title) {
 		
 		try {
@@ -90,6 +84,59 @@ public class DBUtil {
 			
 		} catch(Exception e) {
 			System.out.println("데이터를 반영하다가 문제 발생");
+		} finally {
+			close();
+		}
+	}
+	
+	// ==========================================================================================
+	// 삭제
+	public void deleteArticle(String title) {
+		
+		try {
+			stmt = conn.createStatement();
+			
+			String sql = "DELETE FROM article WHERE title = " + title;
+			
+			stmt.executeUpdate(sql);
+			
+		} catch(Exception e) {
+			System.out.println("데이터를 반영하다가 문제 발생");
+		} finally {
+			close();
+		}
+	}
+	
+	// ==========================================================================================
+	// 삽입
+	public void insertArticle(String title, String body) {
+		
+		try {
+			stmt = conn.createStatement();
+			
+			String sql = "INSERT INTO article SET title = '" + title + "', '" + body + "'";  
+			
+			stmt.executeUpdate(sql);
+			
+		} catch(Exception e) {
+			System.out.println("데이터를 반영하다가 문제 발생");
+		} finally {
+			close();
+		}
+	}
+	// ==========================================================================================
+	// 자원 해제	
+	private void close() {
+		try {
+			if(stmt != null) {
+				stmt.close();		
+			}
+			if(rs != null) {
+				rs.close();		
+			}
+			
+		} catch(Exception e) {
+			System.out.println("자원 해제중 문제 발생");
 		}
 	}
 }
