@@ -1,23 +1,35 @@
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
 
-		
+		Scanner scan = new Scanner(System.in);
 		DBUtil db = new DBUtil();
 		
-		
-		db.updateArticle("안녕하세요");
-		
-		ArrayList<Article> articles = db.selectArticles();
-		
-		for (int i = 0; i < articles.size(); i++) {
-			System.out.println(articles.get(i).getTitle());
-			System.out.println(articles.get(i).getBody());
+		while(true) {			
+			System.out.print("명령어를 입력해주세요 : ");
+			String cmd = scan.nextLine();
+			
+			if(cmd.equals("add")) {				
+				System.out.println("========= 주소록 등록 =========");
+				System.out.print("이름 :");
+				String name = scan.nextLine();
+				
+				System.out.print("주소 :");
+				String address = scan.nextLine();
+				
+				System.out.print("전화번호 :");
+				String phone = scan.nextLine();
+				
+				db.insertAddress(name, address, phone);
+				System.out.println("주소록 등록 완료.");
+				
+			}
 		}
 		
-
+		
+		
 	}
 
 }

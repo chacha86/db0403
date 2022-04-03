@@ -109,12 +109,16 @@ public class DBUtil {
 	
 	// ==========================================================================================
 	// 삽입
-	public void insertArticle(String title, String body) {
+	public void insertAddress(String name, String address, String phone) {
 		
 		try {
 			stmt = conn.createStatement();
 			
-			String sql = "INSERT INTO article SET title = '" + title + "', '" + body + "'";  
+			String sql = "INSERT INTO t_address \r\n" + 
+					"SET `name` = '" + name + "',\r\n" + 
+					"`address` = '"  + address + "',\r\n" + 
+					"`phone` = '" + phone + "',\r\n" + 
+					"regDate = NOW()";  
 			
 			stmt.executeUpdate(sql);
 			
